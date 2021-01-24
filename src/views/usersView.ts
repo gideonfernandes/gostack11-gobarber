@@ -4,6 +4,7 @@ interface UserResponseDTO {
   id: string;
   name: string;
   email: string;
+  avatar: string | null;
 }
 
 export default {
@@ -12,6 +13,7 @@ export default {
       id: user.id,
       name: user.name,
       email: user.email,
+      avatar: user.avatar,
     };
   },
 
