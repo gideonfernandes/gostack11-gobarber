@@ -14,4 +14,8 @@ export default {
       email: user.email,
     };
   },
+
+  renderList(users: User[]): ResponseDTO[] {
+    return users.map(user => this.render(user));
+  },
 };
