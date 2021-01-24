@@ -2,12 +2,13 @@ import { Router } from 'express';
 import { getRepository } from 'typeorm';
 
 import User from '../models/User';
+import ensureAuthenticated from '../middlewares/ensureAuthenticated';
 import CreateUserService from '../services/CreateUserService';
 import usersView from '../views/usersView';
 
 const userRouter = Router();
 
-userRouter.get('/', async (request, response) => {
+userRouter.get('/', ensureAuthenticated, async (request, response) => {
   const usersRepository = getRepository(User);
   const users = await usersRepository.find();
 
@@ -32,13 +33,17 @@ userRouter.post('/', async (request, response) => {
   }
 });
 
-userRouter.delete('/:id', async (request, response) => {
+userRouter.delete('/:id', ensureAuthenticated, async (request, response) => {
   const { id } = request.params;
 
   const usersRepository = getRepository(User);
   await usersRepository.delete(id);
 
   return response.json({ message: 'User deleted successfully!' });
+});
+
+userRouter.patch('/avatar', ensureAuthenticated, async (request, response) => {
+  return response.json({ ok: true });
 });
 
 export default userRouter;

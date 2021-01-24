@@ -1,13 +1,13 @@
 import User from '../models/User';
 
-interface ResponseDTO {
+interface UserResponseDTO {
   id: string;
   name: string;
   email: string;
 }
 
 export default {
-  render(user: User): ResponseDTO {
+  render(user: User): UserResponseDTO {
     return {
       id: user.id,
       name: user.name,
@@ -15,7 +15,7 @@ export default {
     };
   },
 
-  renderList(users: User[]): ResponseDTO[] {
+  renderList(users: User[]): UserResponseDTO[] {
     return users.map(user => this.render(user));
   },
 };

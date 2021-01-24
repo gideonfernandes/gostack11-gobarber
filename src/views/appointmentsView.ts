@@ -1,13 +1,13 @@
 import Appointment from '../models/Appointment';
 
-interface ResponseDTO {
+interface AppointmentResponseDTO {
   id: string;
   provider_id: string;
   date: Date;
 }
 
 export default {
-  render(appointment: Appointment): ResponseDTO {
+  render(appointment: Appointment): AppointmentResponseDTO {
     return {
       id: appointment.id,
       provider_id: appointment.provider_id,
@@ -15,7 +15,7 @@ export default {
     };
   },
 
-  renderList(appointments: Appointment[]): ResponseDTO[] {
+  renderList(appointments: Appointment[]): AppointmentResponseDTO[] {
     return appointments.map(appointment => this.render(appointment));
   },
 };
