@@ -1,4 +1,4 @@
-import { getRepository, Repository } from 'typeorm';
+import { getRepository, Repository, DeleteResult } from 'typeorm';
 
 import IAppointmentsRepository from '@modules/appointments/repositories/IAppointmentsRepository';
 import Appointment from '@modules/appointments/infra/typeorm/entities/Appointment';
@@ -9,6 +9,12 @@ class AppointmentsRepository implements IAppointmentsRepository {
 
   constructor() {
     this.ormRepository = getRepository(Appointment);
+  }
+
+  public async findAll(): Promise<Appointment[]> {
+    const appointments = await this.ormRepository.find();
+
+    return appointments;
   }
 
   public async findByDate(date: Date): Promise<Appointment | undefined> {
@@ -28,6 +34,12 @@ class AppointmentsRepository implements IAppointmentsRepository {
     await this.ormRepository.save(appointment);
 
     return appointment;
+  }
+
+  public async delete(provider_id: string): Promise<DeleteResult> {
+    const deletedAppointment = this.ormRepository.delete(provider_id);
+
+    return deletedAppointment;
   }
 }
 

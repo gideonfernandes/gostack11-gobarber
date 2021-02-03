@@ -1,4 +1,4 @@
-import { getRepository, Repository } from 'typeorm';
+import { getRepository, Repository, DeleteResult } from 'typeorm';
 
 import IUsersRepository from '@modules/users/repositories/IUsersRepository';
 import ICreateUserDTO from '@modules/users/dtos/ICreateUserDTO';
@@ -9,6 +9,12 @@ class UsersRepository implements IUsersRepository {
 
   constructor() {
     this.ormRepository = getRepository(User);
+  }
+
+  public async findAll(): Promise<User[]> {
+    const users = await this.ormRepository.find();
+
+    return users;
   }
 
   public async findById(id: string): Promise<User | undefined> {
@@ -43,6 +49,12 @@ class UsersRepository implements IUsersRepository {
 
   public async save(user: User): Promise<User> {
     return this.ormRepository.save(user);
+  }
+
+  public async delete(provider_id: string): Promise<DeleteResult> {
+    const deletedUser = this.ormRepository.delete(provider_id);
+
+    return deletedUser;
   }
 }
 
