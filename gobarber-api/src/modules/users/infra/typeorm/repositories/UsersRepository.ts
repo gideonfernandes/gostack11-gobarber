@@ -1,4 +1,4 @@
-import { getRepository, Repository, DeleteResult } from 'typeorm';
+import { getRepository, Repository } from 'typeorm';
 
 import IUsersRepository from '@modules/users/repositories/IUsersRepository';
 import ICreateUserDTO from '@modules/users/dtos/ICreateUserDTO';
@@ -31,14 +31,6 @@ class UsersRepository implements IUsersRepository {
     return user;
   }
 
-  public async findByDate(date: Date): Promise<User | undefined> {
-    const findUser = await this.ormRepository.findOne({
-      where: { date },
-    });
-
-    return findUser;
-  }
-
   public async create(userData: ICreateUserDTO): Promise<User> {
     const user = this.ormRepository.create(userData);
 
@@ -51,10 +43,8 @@ class UsersRepository implements IUsersRepository {
     return this.ormRepository.save(user);
   }
 
-  public async delete(provider_id: string): Promise<DeleteResult> {
-    const deletedUser = this.ormRepository.delete(provider_id);
-
-    return deletedUser;
+  public async delete(user_id: string): Promise<void> {
+    await this.ormRepository.delete(user_id);
   }
 }
 
